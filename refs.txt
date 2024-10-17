@@ -1,0 +1,8 @@
+https://github.com/KubeJS-Mods/KubeJS/tree/2001
+
+https://github.com/GregTech-Intergalactical/AntimatterAPI/blob/dev-1.18/common/src/main/java/muramasa/antimatter/integration/kubejs/
+
+https://www.graalvm.org/latest/reference-manual/js/JavaScriptCompatibility/
+https://www.graalvm.org/latest/reference-manual/js/JavaInteroperability/
+https://www.graalvm.org/latest/reference-manual/js/RunOnJDK/
+https://github.com/oracle/graaljs/blob/master/docs/user/JavaInteroperability.md
