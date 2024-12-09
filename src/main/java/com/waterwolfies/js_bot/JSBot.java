@@ -1,28 +1,38 @@
 package com.waterwolfies.js_bot;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.loader.api.FabricLoader;
-
+import com.waterwolfies.js_bot.blocks.JamesBlock;
+import com.waterwolfies.js_bot.blocks.entity.JSBotEntityTypes;
 import com.waterwolfies.js_bot.commands.RunGlobal;
-import com.waterwolfies.js_bot.js.JSHandler;
+import com.waterwolfies.js_bot.network.ServerPacketHandler;
+import com.waterwolfies.js_bot.screen.handler.JSBotScreenHandlerTypes;
 
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
+
 public class JSBot implements ModInitializer {
-    public static final String MOD_ID = "js-bot";
+    public static final String MOD_ID = "js_bot";
 
     // This logger is used to write text to the console and the log file.
     // It is considered best practice to use your mod id as the logger's name.
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static Path base_computer_dir;
     public static Path global_scripts;
     public static Path instance_scripts = FabricLoader.getInstance().getGameDir().resolve("local/global_js");
+    public static final Block JAMES_BLOCK = new JamesBlock();
+    public static final BlockItem JAMES_BLOCK_ITEM = new BlockItem(JAMES_BLOCK, new Item.Settings());
     // public static final ScriptEngine graaljs = new ScriptEngineManager().getEngineByName("Graal.js");
 
     @Override
@@ -67,6 +77,12 @@ public class JSBot implements ModInitializer {
         // }
         // LOGGER.info(t.getB());
         CommandRegistrationCallback.EVENT.register(new RunGlobal()::register);
+        Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "james_block"), JAMES_BLOCK);
+        Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "james_block"), JAMES_BLOCK_ITEM);
+        JSBotEntityTypes.initialize();
+        JSBotScreenHandlerTypes.initialize();
+        ServerPacketHandler.init();
+
         LOGGER.info("Hello Fabric world!");
     }
 

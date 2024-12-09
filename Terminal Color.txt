@@ -1,0 +1,12 @@
+- Monokai
+#797979 - Comment
+#2e2e2e - Background
+#d6d6d6 - text? (or maybe leave as white)
+#e5b567 - strings
+#b4d273 - methods
+#e87d3e - parameters
+#9e86c8 - numbers
+#b05279 - operators + access
+#6c99bb - types and keywords
+
+512px(w) - 106 max char

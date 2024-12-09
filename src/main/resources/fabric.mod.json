@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "js-bot",
+	"id": "js_bot",
 	"version": "${version}",
 	"name": "JS Bot",
 	"description": "This is an example description! Tell everyone what your mod is about!",
@@ -12,15 +12,18 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/js-bot/icon.png",
+	"icon": "assets/js_bot/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			"com.waterwolfies.js_bot.JSBot"
+		],
+		"client": [
+			"com.waterwolfies.js_bot.JSBotClient"
 		]
 	},
 	"mixins": [
-		"js-bot.mixins.json"
+		"js_bot.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.7",

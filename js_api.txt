@@ -1,0 +1,7 @@
+Block Position (get) {check}
+Facing (get set) {check}
+Move (forward, backward, left, right, up, down) {check}
+Redstone Output (down, up, forward, backward, left, right) {check}
+Break and Collect Block (Forward) [Check PlayerEntity#canHarvest] {check}
+Place block (forward) {check}
+Get Inventory (read only [for now]) {check}

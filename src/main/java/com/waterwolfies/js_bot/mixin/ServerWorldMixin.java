@@ -3,8 +3,6 @@ package com.waterwolfies.js_bot.mixin;
 import com.waterwolfies.js_bot.JSBot;
 
 import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -47,6 +45,8 @@ public abstract class ServerWorldMixin {
         JSBot.LOGGER.info("World Global Scripts {}", global_dir);
         last_path = directory;
         JSBot.global_scripts = global_dir;
+        JSBot.base_computer_dir = directory.resolve("computer_files");
+        JSBot.base_computer_dir.toFile().mkdirs();
     }
 
     @Unique

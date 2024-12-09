@@ -16,6 +16,7 @@ import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileAttribute;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.logging.LogRecord;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
+import org.graalvm.polyglot.SandboxPolicy;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.io.FileSystem;
@@ -44,6 +46,7 @@ public class JSHandler {
     private ForwardStream err = new ForwardStream(System.err);
     private Context context;
     private Value bindings;
+    private Runnable onComplete = () -> {};
 
     public JSHandler(String script) throws NoSuchMethodException {
         this(script, false);
@@ -70,7 +73,6 @@ public class JSHandler {
         this.scripts_path = scripts_path;
         this.context = Context.newBuilder("js", "dap")
             // TODO: Limit Priviledges in JS when api is done
-            // .sandbox(SandboxPolicy.CONSTRAINED)
             .allowExperimentalOptions(true)
             .allowHostAccess(HostAccess.newBuilder(HostAccess.SCOPED)
                 .allowAccessAnnotatedBy(HostAccess.Implementable.class)
@@ -83,6 +85,18 @@ public class JSHandler {
                 .allowAccess(Object.class.getMethod("getClass"))
                 .allowAccess(Object.class.getMethod("hashCode"))
                 .allowAccess(Object.class.getMethod("equals", Object.class))
+                .allowAccess(JSApi.class.getMethod("getBlockPos"))
+                .allowAccess(JSApi.class.getMethod("getFacing"))
+                .allowAccess(JSApi.class.getMethod("move", String.class))
+                .allowAccess(JSApi.class.getMethod("face", String.class))
+                .allowAccess(JSApi.class.getMethod("setRedstoneOutput", String.class, int.class))
+                .allowAccess(JSApi.class.getMethod("breakBlock"))
+                .allowAccess(JSApi.class.getMethod("placeBlock", int.class))
+                .allowAccess(JSApi.class.getMethod("getInventory"))
+                .allowAccess(JSApi.JSBlockPos.class.getMethod("toString"))
+                .allowAccess(JSApi.JSItemStack.class.getMethod("toString"))
+                .allowAccess(JSApi.BlockPlaceState.class.getMethod("toString"))
+                .allowAccess(JSApi.BlockBreakState.class.getMethod("toString"))
                 // .allowAccess(Object.class.getMethod("clone"))
                 // .allowPublicAccess(true)
                 // .allowMutableTargetMappings(
@@ -98,9 +112,11 @@ public class JSHandler {
                 .newBuilder()
                 .fileSystem(new FS())
                 .build())
+                .allowValueSharing(true)
+            // Non Constrained
             .allowNativeAccess(true)
-            .allowValueSharing(true)
             .allowHostClassLoading(true)
+            .option("js.stack-trace-limit", "50")
             .allowHostClassLookup((d) -> true)
             .logHandler(new LogHandler())
             .option("js.v8-compat", "true")
@@ -116,7 +132,6 @@ public class JSHandler {
             .option("js.graal-builtin", "false")
             .option("js.java-package-globals", "false")
             .option("js.polyglot-builtin", "false")
-            .option("js.stack-trace-limit", "50")
             .option("js.esm-eval-returns-exports", "true")
             .option("js.async-iterator-helpers", "true")
             .option("js.esm-eval-returns-exports", "true")
@@ -147,6 +162,11 @@ public class JSHandler {
     
     public JSHandler(Path script_file, boolean start) throws NoSuchMethodException {
         this(script_file, getCWDFromFile(script_file), start);
+    }
+
+    public JSHandler setOnComplete(Runnable onComplete) {
+        this.onComplete = onComplete;
+        return this;
     }
 
     private static Path getCWDFromFile(Path file) {
@@ -198,7 +218,6 @@ public class JSHandler {
     }
 
     // TODO: Add instance based globals (Prob in Helper.java)
-    // TODO: Create an js API for the bot
     public void run() {
         if (this.running()) {
             return;
@@ -210,6 +229,7 @@ public class JSHandler {
                 // engine.eval(script);
                 // this.context.eval(Source.newBuilder("js", JSBot.global_script.resolve("hello.js").toFile()).build());
                 this.context.eval(Source.newBuilder("js", base_script.replace("\\\\${script}", this.script), name).build());
+                this.onComplete.run();
             } catch (Exception e) {
                 e.printStackTrace(new PrintStream(this.out));
             }
@@ -219,7 +239,7 @@ public class JSHandler {
     }
 
     private void runAllGlobals() {
-        List<File> files = Arrays.asList(this.scripts_path.toFile().listFiles((file, filename) -> filename.endsWith(".js")));
+        List<File> files = new ArrayList<>(Arrays.asList(this.scripts_path.toFile().listFiles((file, filename) -> filename.endsWith(".js"))));
         files.addAll(Arrays.asList(JSBot.instance_scripts.toFile().listFiles((file, filename) -> filename.endsWith(".js"))));
         for (File file : files) {
             if (file.isDirectory()) {
@@ -388,5 +408,4 @@ public class JSHandler {
         }
     }
 
-    
 }
