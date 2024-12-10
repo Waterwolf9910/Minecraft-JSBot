@@ -45,10 +45,16 @@ dependencies {
     // KubeJS
     // modImplementation("dev.latvian.mods:kubejs-fabric:${kubejs_version}")
 
+
+    include "org.graalvm.polyglot:polyglot:${project.graaljs_version}"
     implementation "org.graalvm.polyglot:polyglot:${project.graaljs_version}"
+    include "org.graalvm.polyglot:js-community:${project.graaljs_version}"
     implementation "org.graalvm.polyglot:js-community:${project.graaljs_version}"
+    include "org.graalvm.polyglot:dap-community:${project.graaljs_version}"
     implementation "org.graalvm.polyglot:dap-community:${project.graaljs_version}"
+    include "org.graalvm.polyglot:inspect-community:${project.graaljs_version}"
     implementation "org.graalvm.polyglot:inspect-community:${project.graaljs_version}"
+    include "org.graalvm.polyglot:tools-community:${project.graaljs_version}"
     implementation "org.graalvm.polyglot:tools-community:${project.graaljs_version}"
 }
 
