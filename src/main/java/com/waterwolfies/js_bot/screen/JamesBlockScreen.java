@@ -1,17 +1,17 @@
 package com.waterwolfies.js_bot.screen;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-
-import org.lwjgl.glfw.GLFW;
-
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.waterwolfies.js_bot.JSBot;
 import com.waterwolfies.js_bot.network.NetInfo;
 import com.waterwolfies.js_bot.screen.handler.JamesBlockScreenHandler;
 import com.waterwolfies.js_bot.screen.widgets.InteractiveTexturedButtonWidget;
 import com.waterwolfies.js_bot.screen.widgets.TextBoxWidget;
+
+import java.util.Arrays;
+import java.util.List;
+
+import com.mojang.blaze3d.systems.RenderSystem;
+
+import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -129,12 +129,18 @@ public class JamesBlockScreen extends HandledScreen<JamesBlockScreenHandler> {
     @Override
     protected void init() {
         super.init();
+        this.playerInventoryTitle = Text.literal("");
         // this.playerInventoryTitle = Text.literal("");
-        try {
-            Field field = this.getClass().getField("playerInventoryTitle");
-            field.setAccessible(true);
-            field.set(this, Text.literal(""));
-        } catch (NoSuchFieldException | IllegalAccessException e) {e.printStackTrace();}
+        // try {
+        //     for (Field field : HandledScreen.class.getFields()) {
+        //         JSBot.LOGGER.info(field.getName());
+        //         JSBot.LOGGER.info("{}", field.getType());
+        //         JSBot.LOGGER.info("{}", this.playerInventoryTitle.getClass());
+        //     }
+        //     Field field = this.getClass().getField(FabricLoader.getInstance().isDevelopmentEnvironment() ? "playerInventoryTitle": "field_29347");
+        //     field.setAccessible(true);
+        //     field.set(this, Text.literal(""));
+        // } catch (NoSuchFieldException | IllegalAccessException e) {e.printStackTrace();}
         
         String cmd_text = "";
         String log_text = "";

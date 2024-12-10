@@ -1,0 +1,18 @@
+accessWidener v2 named
+
+#BlockEntity pos
+accessible field net/minecraft/block/entity/BlockEntity pos Lnet/minecraft/util/math/BlockPos;
+mutable field net/minecraft/block/entity/BlockEntity pos Lnet/minecraft/util/math/BlockPos;
+
+#HandledScreen playerInventoryTitle
+mutable field net/minecraft/client/gui/screen/ingame/HandledScreen playerInventoryTitle Lnet/minecraft/text/Text;
+
+#TexturedButtonWidget texture
+mutable field net/minecraft/client/gui/widget/TexturedButtonWidget texture Lnet/minecraft/util/Identifier;
+
+#EditBoxWidget editBox
+accessible field net/minecraft/client/gui/widget/EditBoxWidget editBox Lnet/minecraft/client/gui/EditBox;
+
+#EditBox$Substring
+accessible class net/minecraft/client/gui/EditBox$Substring
+

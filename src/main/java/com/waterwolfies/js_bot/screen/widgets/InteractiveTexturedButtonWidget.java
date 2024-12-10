@@ -1,7 +1,5 @@
 package com.waterwolfies.js_bot.screen.widgets;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
@@ -60,13 +58,14 @@ public class InteractiveTexturedButtonWidget extends TexturedButtonWidget {
     @Override
     public void onPress() {
         if (click_texture != null) {
-            try {
-                Field tex_field = this.getClass().getField("texture");
-                tex_field.setAccessible(true);
-                tex_field.set(this, click_texture);
-            } catch (IllegalAccessException | NoSuchFieldException e) {
-                e.printStackTrace();
-            }
+            this.texture = click_texture;
+            // try {
+            //     Field tex_field = this.getClass().getField(FabricLoader.getInstance().isDevelopmentEnvironment() ? "texture" : "field_2127");
+            //     tex_field.setAccessible(true);
+            //     tex_field.set(this, click_texture);
+            // } catch (IllegalAccessException | NoSuchFieldException e) {
+            //     e.printStackTrace();
+            // }
         } else {
             this.alpha = .5f;
         }
@@ -81,13 +80,14 @@ public class InteractiveTexturedButtonWidget extends TexturedButtonWidget {
     }
     
     public void resetTexture() {
-        try {
-            Field tex_field = this.getClass().getField("texture");
-            tex_field.setAccessible(true);
-            tex_field.set(this, init_texture);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+        this.texture = init_texture;
+        // try {
+        //     Field tex_field = this.getClass().getField(FabricLoader.getInstance().isDevelopmentEnvironment() ? "texture" : "field_2127");
+        //     tex_field.setAccessible(true);
+        //     tex_field.set(this, init_texture);
+        // } catch (IllegalAccessException | NoSuchFieldException e) {
+        //     e.printStackTrace();
+        // }
         this.alpha = 1f;
     }
 

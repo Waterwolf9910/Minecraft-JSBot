@@ -12,7 +12,6 @@ import java.util.concurrent.CompletableFuture;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -20,12 +19,11 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 
-import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.CommandManager.RegistrationEnvironment;
-import net.minecraft.text.Text;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.Text;
 
 public class RunGlobal implements ICommand, Command<ServerCommandSource>, SuggestionProvider<ServerCommandSource> {
     

@@ -34,7 +34,7 @@ public class JamesBlockEntity extends BlockEntity implements ExtendedScreenHandl
 
     private int id = -1;
 
-    protected DefaultedList<ItemStack> items = DefaultedList.ofSize(5);
+    protected DefaultedList<ItemStack> items = DefaultedList.ofSize(5, ItemStack.EMPTY);
     public int[] redstone_sides = new int[] { 0, 0, 0, 0, 0, 0 };
 
     public JamesBlockEntity(BlockPos pos, BlockState state) {
@@ -61,7 +61,7 @@ public class JamesBlockEntity extends BlockEntity implements ExtendedScreenHandl
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-        nbt.putInt("id", id);
+        nbt.putInt("comp_id", id);
         nbt.putIntArray("redstone_sides", redstone_sides);
         Inventories.writeNbt(nbt, this.items);
         super.writeNbt(nbt);
@@ -70,7 +70,7 @@ public class JamesBlockEntity extends BlockEntity implements ExtendedScreenHandl
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        this.id = nbt.getInt("id");
+        this.id = nbt.getInt("comp_id");
         this.redstone_sides = nbt.getIntArray("redstone_sides");
         Inventories.readNbt(nbt, items);
     }

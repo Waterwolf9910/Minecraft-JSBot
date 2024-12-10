@@ -29,7 +29,7 @@ import net.minecraft.world.spawner.Spawner;
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin {
     
-    @Inject(method = "<init>()V", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/level/storage/LevelStorage$Session;Lnet/minecraft/world/level/ServerWorldProperties;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/world/dimension/DimensionOptions;Lnet/minecraft/server/WorldGenerationProgressListener;ZJLjava/util/List;ZLnet/minecraft/util/math/random/RandomSequencesState;)V", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
     public void getWorld(MinecraftServer server, Executor e, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey<World> wk, DimensionOptions doo, WorldGenerationProgressListener w, boolean d, long s, List<Spawner> sp, boolean stt, @Nullable RandomSequencesState rss, CallbackInfo info) {
         setupGlobalScripts(session.getDirectory(WorldSavePath.ROOT).toAbsolutePath().normalize());
     }

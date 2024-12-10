@@ -97,7 +97,8 @@ public class JSApi {
         for (ItemStack stack : items) {
             list.add(new JSItemStack(stack));
         }
-        return (JSItemStack[]) list.toArray();
+        JSItemStack[] s = new JSItemStack[list.size()];
+        return list.toArray(s);
     }
 
     // TODO: NBT -> JSON
@@ -120,7 +121,7 @@ public class JSApi {
             this.is_food = stack.isFood();
             this.is_enchantable = stack.isEnchantable();
             ItemStack rr = stack.getRecipeRemainder();
-            if (rr != null) {
+            if (rr != null && !stack.isEmpty()) {
                 recipe_remainder = new JSItemStack(rr);
             } else {
                 recipe_remainder = null;

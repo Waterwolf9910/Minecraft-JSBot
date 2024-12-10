@@ -1,7 +1,5 @@
 package com.waterwolfies.js_bot.mixin;
 
-import java.lang.reflect.Field;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -42,13 +40,14 @@ public abstract class WorldChunkMixin {
         }
         this.removeBlockEntityTicker(init.getPos());
         init.getWorld().setBlockState(newPos, state);
-        try {
-            Field field = init.getClass().getField("pos");
-            field.setAccessible(true);
-            field.set(init, newPos.toImmutable());
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+        init.pos = newPos.toImmutable();
+        // try {
+        //     Field field = init.getClass().getField(FabricLoader.getInstance().isDevelopmentEnvironment() ? "pos" : "field_11867");
+        //     field.setAccessible(true);
+        //     field.set(init, newPos.toImmutable());
+        // } catch (IllegalAccessException | NoSuchFieldException e) {
+        //     e.printStackTrace();
+        // }
         WorldChunkMixin newChunk = ((WorldChunkMixin) (Object) init.getWorld().getChunk(newPos));
         ((ChunkIMixin) newChunk).getBlockEntityMap().put(newPos.toImmutable(), init);
         if (init.getWorld() instanceof ServerWorld world) {

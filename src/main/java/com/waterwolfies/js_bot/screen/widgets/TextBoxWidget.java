@@ -1,7 +1,5 @@
 package com.waterwolfies.js_bot.screen.widgets;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.EditBox;
 import net.minecraft.client.gui.widget.EditBoxWidget;
@@ -41,72 +39,72 @@ public class TextBoxWidget extends EditBoxWidget {
         this.kp_listener = listener;
     }
 
-    public EditBox getEditBox() {
-        try {
-            Field edit_bot_field = EditBoxWidget.class.getDeclaredField("editBox");
-            edit_bot_field.setAccessible(true);
-            return (EditBox) edit_bot_field.get(this);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    // public EditBox getEditBox() {
+    //     try {
+    //         Field edit_bot_field = EditBoxWidget.class.getDeclaredField(FabricLoader.getInstance().isDevelopmentEnvironment() ? "editBox" : "field_39509");
+    //         edit_bot_field.setAccessible(true);
+    //         return (EditBox) edit_bot_field.get(this);
+    //     } catch (NoSuchFieldException | IllegalAccessException e) {
+    //         e.printStackTrace();
+    //     }
+    //     return null;
+    // }
 
     public void moveCursor(CursorMovement move, int amount) {
-        EditBox edit_box = getEditBox();
-        if (edit_box == null) {
-            return;
-        }
+        // EditBox edit_box = getEditBox();
+        // if (edit_box == null) {
+        //     return;
+        // }
 
-        edit_box.moveCursor(amount, amount);
+        this.editBox.moveCursor(amount, amount);
     }
 
     public void setCursor(int x, int y) {
-        EditBox edit_box = getEditBox();
-        if (edit_box == null) {
-            return;
-        }
+        // EditBox edit_box = getEditBox();
+        // if (edit_box == null) {
+        //     return;
+        // }
 
-        edit_box.moveCursor(x, y);
+        this.editBox.moveCursor(x, y);
     }
 
     public int currentLine() {
-        EditBox edit_box = getEditBox();
-        if (edit_box == null) {
-            return -1;
-        }
+        // EditBox edit_box = getEditBox();
+        // if (edit_box == null) {
+        //     return -1;
+        // }
 
-        return edit_box.getCurrentLineIndex();
+        return this.editBox.getCurrentLineIndex();
     }
 
     public String getLine(int line) {
-        EditBox edit_box = getEditBox();
-        if (edit_box == null) {
-            return null;
-        }
+        // EditBox edit_box = getEditBox();
+        // if (edit_box == null) {
+        //     return null;
+        // }
 
-        try {
-            var ret = edit_box.getLine(line);
-            Class<?> clazz = null;
-            for (Class<?> c : edit_box.getClass().getClasses()) {
-                if (c.isInstance(ret)) {
-                    clazz = c;
-                    break;
-                }
-            }
-            if (clazz == null) {
-                throw new NoSuchFieldException("Unable to find class def");
-            }
-            Field begin = clazz.getField("beginIndex");
-            Field end = clazz.getField("endIndex");
-            begin.setAccessible(true);
-            end.setAccessible(true);
-            return edit_box.getText().substring((int) begin.get(ret), (int) end.get(ret));
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     Class<?> clazz = null;
+        //     for (Class<?> c : edit_box.getClass().getClasses()) {
+        //         if (c.isInstance(ret)) {
+        //             clazz = c;
+        //             break;
+        //         }
+        //     }
+        //     if (clazz == null) {
+        //         throw new NoSuchFieldException("Unable to find class def");
+        //     }
+        //     Field begin = clazz.getField(FabricLoader.getInstance().isDevelopmentEnvironment() ? "beginIndex" : "comp_862");
+        //     Field end = clazz.getField(FabricLoader.getInstance().isDevelopmentEnvironment() ? "endIndex" : "comp_863");
+        //     begin.setAccessible(true);
+        //     end.setAccessible(true);
+        //     return edit_box.getText().substring((int) begin.get(ret), (int) end.get(ret));
+        // } catch (IllegalAccessException | NoSuchFieldException e) {
+        //     e.printStackTrace();
+        // }
         
-        return null;
+        EditBox.Substring sub = this.editBox.getLine(line);
+        return this.editBox.getText().substring(sub.beginIndex(), sub.endIndex());
     }
 
     public interface KeyPressedListener {
