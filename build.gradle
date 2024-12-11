@@ -45,7 +45,10 @@ dependencies {
     // KubeJS
     // modImplementation("dev.latvian.mods:kubejs-fabric:${kubejs_version}")
 
-
+    include "org.graalvm.sdk:nativeimage:${project.graaljs_version}"
+    implementation "org.graalvm.sdk:nativeimage:${project.graaljs_version}"
+    include "org.graalvm.sdk:collections:${project.graaljs_version}"
+    implementation "org.graalvm.sdk:collections:${project.graaljs_version}"
     include "org.graalvm.polyglot:polyglot:${project.graaljs_version}"
     implementation "org.graalvm.polyglot:polyglot:${project.graaljs_version}"
     include "org.graalvm.polyglot:js-community:${project.graaljs_version}"

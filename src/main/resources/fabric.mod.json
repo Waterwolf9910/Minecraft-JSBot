@@ -34,5 +34,15 @@
 	"suggests": {
 		"another-mod": "*"
 	},
-	"accessWidener": "js_bot.accesswidener"
+	"accessWidener": "js_bot.accesswidener",
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1937": [
+				"com.waterwolfies.js_bot.imixin.IWorldMixin"
+			],
+			"net/minecraft/class_2818": [
+				"com.waterwolfies.js_bot.imixin.IWorldChunkMixin"
+			]
+		}
+	}
 }

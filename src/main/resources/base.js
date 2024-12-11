@@ -9,4 +9,5 @@ try {
     \\${script}
 } catch (e) {
     console.error(e)
+    e.printStackTrace()
 }

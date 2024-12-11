@@ -16,3 +16,6 @@ accessible field net/minecraft/client/gui/widget/EditBoxWidget editBox Lnet/mine
 #EditBox$Substring
 accessible class net/minecraft/client/gui/EditBox$Substring
 
+#WorldChunk.updateGameEventListener & updateTicker
+accessible method net/minecraft/world/chunk/WorldChunk updateGameEventListener (Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/server/world/ServerWorld;)V
+accessible method net/minecraft/world/chunk/WorldChunk updateTicker (Lnet/minecraft/block/entity/BlockEntity;)V

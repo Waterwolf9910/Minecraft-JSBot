@@ -3,10 +3,14 @@ package com.waterwolfies.js_bot;
 import com.waterwolfies.js_bot.blocks.JamesBlock;
 import com.waterwolfies.js_bot.blocks.entity.JSBotEntityTypes;
 import com.waterwolfies.js_bot.commands.RunGlobal;
+import com.waterwolfies.js_bot.js.JSHandler;
 import com.waterwolfies.js_bot.network.ServerPacketHandler;
 import com.waterwolfies.js_bot.screen.handler.JSBotScreenHandlerTypes;
 
 import java.nio.file.Path;
+
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +67,7 @@ public class JSBot implements ModInitializer {
         //     console.log("Ran")
         //     a
         // """;
+        
         // var t = new test();
         // Map<String, String> map = new HashMap<>();
         // map.put("script", src);
@@ -76,6 +81,24 @@ public class JSBot implements ModInitializer {
         //     e.printStackTrace();
         // }
         // LOGGER.info(t.getB());
+        String src = """
+        let a = 'Hello JS'
+        console.log(a)
+        """;
+        try {
+            var engine = new ScriptEngineManager().getEngineByName("graal.js");
+            if (engine != null) {
+                try {
+                    engine.eval(src);
+                } catch (ScriptException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            new JSHandler(src).setError(System.err).setOutput(System.out).setOnComplete(() -> System.out.println("H")).run();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         CommandRegistrationCallback.EVENT.register(new RunGlobal()::register);
         Registry.register(Registries.BLOCK, Identifier.of(MOD_ID, "james_block"), JAMES_BLOCK);
         Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "james_block"), JAMES_BLOCK_ITEM);

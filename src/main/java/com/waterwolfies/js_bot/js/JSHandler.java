@@ -27,7 +27,6 @@ import java.util.logging.LogRecord;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
-import org.graalvm.polyglot.SandboxPolicy;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.io.FileSystem;
@@ -97,6 +96,7 @@ public class JSHandler {
                 .allowAccess(JSApi.JSItemStack.class.getMethod("toString"))
                 .allowAccess(JSApi.BlockPlaceState.class.getMethod("toString"))
                 .allowAccess(JSApi.BlockBreakState.class.getMethod("toString"))
+                .allowAccess(Throwable.class.getMethod("printStackTrace"))
                 // .allowAccess(Object.class.getMethod("clone"))
                 // .allowPublicAccess(true)
                 // .allowMutableTargetMappings(
@@ -116,7 +116,7 @@ public class JSHandler {
             // Non Constrained
             .allowNativeAccess(true)
             .allowHostClassLoading(true)
-            .option("js.stack-trace-limit", "50")
+            // .option("js.stack-trace-limit", "50")
             .allowHostClassLookup((d) -> true)
             .logHandler(new LogHandler())
             .option("js.v8-compat", "true")
@@ -139,7 +139,6 @@ public class JSHandler {
             .option("js.esm-bare-specifier-relative-lookup", "true")
             .option("js.top-level-await", "true")
             // .option("engine.Mode", "throughput")
-
             /// Use below when debuging base scripts and apis
             // .option("inspect", "localhost:4711")
             // .option("inspect.WaitAttached", "false")

@@ -257,8 +257,6 @@ public class JamesBlockScreen extends HandledScreen<JamesBlockScreenHandler> {
                 }
             }).setClickTexture(pressed_exit_button)
         );
-        
-        JSBot.LOGGER.info("{} {}", this.width, this.backgroundWidth);
     }
 
     public void completed() {

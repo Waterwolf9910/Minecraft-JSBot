@@ -1,0 +1,27 @@
+{
+    "variants": {
+        "facing=east": {
+            "model": "js_bot:block/james_block",
+            "y": 90
+        },
+        "facing=north": {
+            "model": "js_bot:block/james_block"
+        },
+        "facing=up": {
+            "model": "js_bot:block/james_block",
+            "x": 270
+        },
+        "facing=down": {
+            "model": "js_bot:block/james_block",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "js_bot:block/james_block",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "js_bot:block/james_block",
+            "y": 270
+        }
+    }
+}

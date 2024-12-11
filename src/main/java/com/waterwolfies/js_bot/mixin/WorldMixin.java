@@ -1,8 +1,9 @@
 package com.waterwolfies.js_bot.mixin;
 
+import com.waterwolfies.js_bot.imixin.IWorldMixin;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
@@ -10,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 
 @Mixin(World.class)
-public abstract class WorldMixin {
+public abstract class WorldMixin implements IWorldMixin {
     
     @Shadow
     public abstract WorldChunk getWorldChunk(BlockPos pos);
@@ -21,7 +22,7 @@ public abstract class WorldMixin {
     @Shadow
     public abstract boolean isInBuildLimit(BlockPos pos);
 
-    @Unique
+    @Override
     public void moveBlockEntity(BlockPos pos, BlockPos newPos) {
         if (isInBuildLimit(pos) || isInBuildLimit(newPos)) {
             return;
@@ -30,7 +31,7 @@ public abstract class WorldMixin {
         ((WorldChunkMixin) (Object) this.getWorldChunk(pos)).moveBlockEntity(be, newPos);
     }
 
-    @Unique
+    @Override
     public void moveBlockEntity(BlockEntity be, BlockPos newPos) {
         if (isInBuildLimit(newPos)) {
             return;

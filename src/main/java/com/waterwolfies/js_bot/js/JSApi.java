@@ -1,7 +1,7 @@
 package com.waterwolfies.js_bot.js;
 
 import com.waterwolfies.js_bot.blocks.entity.JamesBlockEntity;
-import com.waterwolfies.js_bot.mixin.WorldMixin;
+import com.waterwolfies.js_bot.imixin.IWorldMixin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,9 @@ public class JSApi {
         if (!this.be.getWorld().testBlockState(pos, state -> state.isOf(Blocks.AIR))) {
             return false;
         }
-        ((WorldMixin) (Object) this.be.getWorld()).moveBlockEntity(this.be, pos);
+        this.be.getWorld().getServer().execute(() -> {
+            ((IWorldMixin) this.be.getWorld()).moveBlockEntity(this.be, pos);
+        });
         return true;
     }
 

@@ -1,4 +1,4 @@
-module global {
+declare global {
 
     export interface JSBlockPos {
         readonly x: number;
@@ -67,5 +67,9 @@ module global {
          * Places the block where the bot is looking
          */
         placeBlock(slot: number): BlockPlaceState
+    }
+    
+    interface Window {
+        js_api: JSApi;
     }
 }
